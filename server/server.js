@@ -3,6 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
+const productRoutes = require('./routes/productRoutes');
+ require('./models/Category');
 
 const app = express();
 
@@ -21,6 +23,7 @@ app.get('/api/health', (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 app.use('/api/auth', authRoutes);
+app.use('/api/products', productRoutes);
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
