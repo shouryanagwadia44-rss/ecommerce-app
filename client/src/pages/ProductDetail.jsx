@@ -1,10 +1,12 @@
    import { useState, useEffect } from 'react';
    import { useParams } from 'react-router-dom';
    import { fetchProductById } from '../api/productApi';
+   import { useCart } from '../context/CartContext';
 
    const ProductDetail = () => {
      const { id } = useParams();
      const [product, setProduct] = useState(null);
+     const { addItem } = useCart();
 
      useEffect(() => {
        const loadProduct = async () => {
@@ -28,7 +30,10 @@
            <p className="text-gray-600 mt-2">{product.description}</p>
            <p className="text-xl font-semibold mt-4">₹{product.price}</p>
            <p className="text-sm text-gray-500 mt-1">In stock: {product.stock}</p>
-           <button className="mt-6 bg-blue-600 text-white px-6 py-2 rounded">
+           <button
+             onClick={() => addItem(product._id, 1)}
+             className="mt-6 bg-blue-600 text-white px-6 py-2 rounded"
+           >
              Add to Cart
            </button>
          </div>
