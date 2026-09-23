@@ -6,12 +6,14 @@
    import ProductDetail from './pages/ProductDetail';
    import Cart from './pages/Cart';
    import Navbar from './components/Navbar';
+   import OrderSuccess from './pages/OrderSuccess';
 
    function App() {
      return (
        <BrowserRouter>
           <Navbar />
          <Routes>
+           <Route path="/order-success" element={<OrderSuccess />} />
            <Route path="/" element={<Home />} />
            <Route path="/signup" element={<Signup />} />
            <Route path="/login" element={<Login />} />
