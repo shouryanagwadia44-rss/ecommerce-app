@@ -13,6 +13,8 @@
          <div className="flex items-center gap-6">
            <Link to="/products">Products</Link>
            <Link to="/cart">Cart ({cart.length})</Link>
+           <Link to="/orders">Orders</Link>
+           {user?.role === 'admin' && <Link to="/admin">Admin</Link>}
 
            {user ? (
              <button onClick={logout} className="text-red-500">Logout</button>

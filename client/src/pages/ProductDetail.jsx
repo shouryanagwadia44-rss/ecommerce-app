@@ -2,19 +2,35 @@
    import { useParams } from 'react-router-dom';
    import { fetchProductById } from '../api/productApi';
    import { useCart } from '../context/CartContext';
-
+   import { createReview, fetchProductReviews } from '../api/reviewApi';
    const ProductDetail = () => {
      const { id } = useParams();
      const [product, setProduct] = useState(null);
      const { addItem } = useCart();
+     const [reviews, setReviews] = useState([]);
+   const [rating, setRating] = useState(5);
+   const [comment, setComment] = useState('');
 
-     useEffect(() => {
-       const loadProduct = async () => {
-         const res = await fetchProductById(id);
-         setProduct(res.data);
-       };
-       loadProduct();
-     }, [id]);
+   useEffect(() => {
+     const loadProduct = async () => {
+       const res = await fetchProductById(id);
+       setProduct(res.data);
+     };
+     const loadReviews = async () => {
+       const res = await fetchProductReviews(id);
+       setReviews(res.data);
+     };
+     loadProduct();
+     loadReviews();
+   }, [id]);
+
+      const handleReviewSubmit = async (e) => {
+     e.preventDefault();
+     await createReview(id, rating, comment);
+     const res = await fetchProductReviews(id);
+     setReviews(res.data);
+     setComment('');
+   };
 
      if (!product) return <p className="text-center mt-10">Loading...</p>;
 
@@ -37,6 +53,44 @@
              Add to Cart
            </button>
          </div>
+            <div className="md:col-span-2 mt-10">
+     <h2 className="text-xl font-bold mb-4">Reviews</h2>
+
+     {reviews.map((r) => (
+       <div key={r._id} className="border-b py-3">
+         <div className="flex items-center gap-2">
+           <span className="font-semibold">{r.user.name}</span>
+           <span className="text-yellow-500">{'★'.repeat(r.rating)}</span>
+         </div>
+         <p className="text-gray-600">{r.comment}</p>
+       </div>
+     ))}
+
+     <form onSubmit={handleReviewSubmit} className="mt-6">
+       <h3 className="font-semibold mb-2">Write a review</h3>
+       <select
+         value={rating}
+         onChange={(e) => setRating(Number(e.target.value))}
+         className="border rounded p-2 mb-2"
+       >
+         <option value={5}>5 stars</option>
+         <option value={4}>4 stars</option>
+         <option value={3}>3 stars</option>
+         <option value={2}>2 stars</option>
+         <option value={1}>1 star</option>
+       </select>
+       <textarea
+         value={comment}
+         onChange={(e) => setComment(e.target.value)}
+         placeholder="Share your thoughts..."
+         className="w-full border rounded p-2 mb-2"
+         required
+       />
+       <button className="bg-blue-600 text-white px-4 py-2 rounded">
+         Submit Review
+       </button>
+     </form>
+   </div>
        </div>
      );
    };
