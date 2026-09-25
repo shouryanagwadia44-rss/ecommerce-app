@@ -7,18 +7,18 @@
      const { cart } = useCart();
 
      return (
-       <nav className="flex items-center justify-between px-6 py-4 border-b">
+          <nav className="flex flex-wrap items-center justify-between gap-4 px-4 sm:px-6 py-4 border-b">
          <Link to="/" className="font-bold text-xl">ShopApp</Link>
 
-         <div className="flex items-center gap-6">
+            <div className="flex items-center gap-4 sm:gap-6 flex-wrap text-sm sm:text-base">
            <Link to="/products">Products</Link>
            <Link to="/cart">Cart ({cart.length})</Link>
            <Link to="/orders">Orders</Link>
            {user?.role === 'admin' && <Link to="/admin">Admin</Link>}
 
-           {user ? (
-             <button onClick={logout} className="text-red-500">Logout</button>
-           ) : (
+   {user ? (
+     <button onClick={logout} className="text-red-500 whitespace-nowrap">Logout</button>
+   ) : (
              <>
                <Link to="/login">Login</Link>
                <Link to="/signup">Sign up</Link>

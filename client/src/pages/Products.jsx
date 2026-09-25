@@ -7,15 +7,18 @@
      const [search, setSearch] = useState('');
      const [page, setPage] = useState(1);
      const [totalPages, setTotalPages] = useState(1);
+     const [loading, setLoading] = useState(true);
 
-     useEffect(() => {
-       const loadProducts = async () => {
-         const res = await fetchProducts({ search, page });
-         setProducts(res.data.products);
-         setTotalPages(res.data.pages);
-       };
-       loadProducts();
-     }, [search, page]);
+   useEffect(() => {
+     const loadProducts = async () => {
+       setLoading(true);
+       const res = await fetchProducts({ search, page });
+       setProducts(res.data.products);
+       setTotalPages(res.data.pages);
+       setLoading(false);
+     };
+     loadProducts();
+   }, [search, page]);
 
      return (
        <div className="max-w-6xl mx-auto p-6">
@@ -27,11 +30,17 @@
            className="w-full mb-6 p-2 border rounded"
          />
 
-         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-           {products.map((p) => (
-             <ProductCard key={p._id} product={p} />
-           ))}
-         </div>
+   {loading ? (
+     <p className="text-center text-gray-500 py-10">Loading products...</p>
+   ) : products.length === 0 ? (
+     <p className="text-center text-gray-500 py-10">No products found</p>
+   ) : (
+     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+       {products.map((p) => (
+         <ProductCard key={p._id} product={p} />
+       ))}
+     </div>
+   )}
 
          <div className="flex justify-center gap-4 mt-6">
            <button

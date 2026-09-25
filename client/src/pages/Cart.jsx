@@ -39,9 +39,16 @@ const Cart = () => {
     rzp.open();
   };
 
-  if (cart.length === 0) {
-    return <p className="text-center mt-10 text-gray-500">Your cart is empty</p>;
-  }
+   if (cart.length === 0) {
+     return (
+       <div className="text-center mt-20">
+         <p className="text-gray-500 text-lg">Your cart is empty</p>
+         <a href="/products" className="text-blue-600 underline mt-2 inline-block">
+           Browse products
+         </a>
+       </div>
+     );
+   }
 
   return (
     <div className="max-w-3xl mx-auto p-6">
