@@ -39,16 +39,16 @@ const Cart = () => {
     rzp.open();
   };
 
-   if (cart.length === 0) {
-     return (
-       <div className="text-center mt-20">
-         <p className="text-gray-500 text-lg">Your cart is empty</p>
-         <a href="/products" className="text-blue-600 underline mt-2 inline-block">
-           Browse products
-         </a>
-       </div>
-     );
-   }
+  if (cart.length === 0) {
+    return (
+      <div className="text-center mt-20">
+        <p className="text-gray-500 text-lg">Your cart is empty</p>
+        <a href="/products" className="text-blue-600 underline mt-2 inline-block">
+          Browse products
+        </a>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-3xl mx-auto p-6">
@@ -77,10 +77,10 @@ const Cart = () => {
               className="w-16 border rounded p-1 text-center"
             />
             <button
-              onClick={() => removeItem(item.product._id)}
-              className="text-red-500 text-sm"
+              onClick={handleCheckout}
+              className="mt-4 bg-blue-600 text-white px-6 py-2.5 rounded-lg font-medium hover:bg-blue-700 transition"
             >
-              Remove
+              Proceed to Checkout
             </button>
           </div>
         </div>

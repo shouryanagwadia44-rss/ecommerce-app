@@ -21,14 +21,15 @@
    }, [search, page]);
 
      return (
-       <div className="max-w-6xl mx-auto p-6">
-         <input
-           type="text"
-           placeholder="Search products..."
-           value={search}
-           onChange={(e) => { setSearch(e.target.value); setPage(1); }}
-           className="w-full mb-6 p-2 border rounded"
-         />
+   <div className="max-w-6xl mx-auto p-6">
+     <h1 className="text-2xl font-bold mb-5 text-gray-800">All Products</h1>
+   <input
+     type="text"
+     placeholder="Search products..."
+     value={search}
+     onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+     className="w-full mb-6 p-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+   />
 
    {loading ? (
      <p className="text-center text-gray-500 py-10">Loading products...</p>
